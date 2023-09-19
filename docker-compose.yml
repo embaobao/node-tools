@@ -1,0 +1,28 @@
+################################################################################
+# Node-RED Stack or Compose
+################################################################################ 分离终端 Ctrl-p Ctrl-q - 容器将继续在后台运行。
+# docker stack deploy node-red --compose-file docker-compose.yml
+# docker-compose -f docker-compose.yml -p myNoderedProject up -d
+# docker-compose -f docker-compose.yml -p myNoderedProject down
+# code /var/lib/docker/volumes/mynoderedproject_node-red-data
+# @see https://nodered.org/docs/user-guide/runtime/securing-node-red
+################################################################################
+version: '3.7'
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - '1880:1880'
+    networks:
+      - node-red-net
+    volumes:
+      - node-red-data:/data
+
+volumes:
+  node-red-data:
+
+networks:
+  node-red-net:
